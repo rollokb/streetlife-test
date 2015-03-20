@@ -10,7 +10,7 @@ In order to do an estimation, we have created a prototype map of London using
 it's tube stations. The plan is to run a simulation placing random owners and
 cats all around the tube map and check how long it takes them to find each other.
 
-We provide you with a the map in the following format:
+We provide you with the map in the following format:
 
 stations.csv: station_id, station_name
 connections.csv: station_id_1, station_id_2
@@ -21,7 +21,7 @@ connections.csv: station_id_1, station_id_2
 - Because cats are not very intelligent, on each turn they'll travel randomly to one of the stations connected to where they are.
 - Humans are more intelligent, they will travel to one of the stations connected to where they are, but not to one they previously visited.
 - To be honest, humans are not very intelligent. They only remember the latest 3 stations they visited.
-- If an owner can't travel because already visited all stations around (For example, when the ower arrives to Upmister) they'll forget about any previously visited station.
+- If an owner can't travel because already visited all stations around (For example, when the owner arrives to Upmister) they'll forget about any previously visited station.
 
 
 Every time an owner finds their cat the amount of love released is THAT big
