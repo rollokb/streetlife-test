@@ -12,16 +12,19 @@ cats all around the tube map and check how long it takes them to find each other
 
 We provide you with the map in the following format:
 
-stations.csv: station_id, station_name
-connections.csv: station_id_1, station_id_2
+tfl_stations.csv: station_id, station_name
+tfl_connections.csv: station_id_1, station_id_2
 
 - You should create N owners and N cats, where N is specified as a command-line.
 - The initial position of the owner and the cat must be random and different one to the other.
 - Any number of owners and cats can start in the same station.
-- Because cats are not very intelligent, on each turn they'll travel randomly to one of the stations connected to where they are.
-- Humans are more intelligent, they will travel to one of the stations connected to where they are, but not to one they previously visited.
+- Because cats are not very intelligent, on each turn they'll travel randomly to one of the stations 
+  connected to where they are.
+- Humans are more intelligent, they will travel to one of the stations connected to where they are,
+  but not to one they previously visited.
 - To be honest, humans are not very intelligent. They only remember the latest 3 stations they visited.
-- If an owner can't travel because already visited all stations around (For example, when the owner arrives to Upmister) they'll forget about any previously visited station.
+- If an owner can't travel because already visited all stations around (For example, when the owner 
+  arrives to Upmister) they'll forget about any previously visited station.
 
 
 Every time an owner finds their cat the amount of love released is THAT big
