@@ -26,7 +26,6 @@ tfl_connections.csv: station_id_1, station_id_2
 - If an owner can't travel because already visited all stations around (For example, when the owner 
   arrives to Upmister) they'll forget about any previously visited station.
 
-
 Every time an owner finds their cat the amount of love released is THAT big
 that TFL needs to close the station to clean the love from the walls.
 
