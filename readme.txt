@@ -21,6 +21,8 @@ connections.csv: station_id_1, station_id_2
 - Because cats are not very intelligent, on each turn they'll travel randomly to one of the stations connected to where they are.
 - Humans are more intelligent, they will travel to one of the stations connected to where they are, but not to one they previously visited.
 - To be honest, humans are not very intelligent. They only remember the latest 3 stations they visited.
+- If an owner can't travel because already visited all stations around (For example, when the ower arrives to Upmister) they'll forget about any previously visited station.
+
 
 Every time an owner finds their cat the amount of love released is THAT big
 that TFL needs to close the station to clean the love from the walls.
@@ -37,7 +39,7 @@ owners have found their cats, or each owner and cat has moved 100,000 times.
 
 When an owner finds their cat the output should be:
 
-Owner 14 found cat 14 - picadilly-circus is now closed.
+Owner 14 found cat 14 - Picadilly Circus is now closed.
 
 Once the program has finished, it should print out:
 
@@ -45,7 +47,7 @@ Total number of cats: 200
 Number of cats found: 25
 Average number of movements required to find a cat: 34
 
-If you want to calculate any other metric like for example the most visited station 
+If you want to calculate any other metric like for example the most visited station
 or the owner with less luck... feel free to include them in the final output.
 
 Review notes:
