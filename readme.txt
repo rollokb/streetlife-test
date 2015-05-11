@@ -53,3 +53,4 @@ Review notes:
  - We are not looking for speed, we are looking for a readable elegant solution.
  - It is ok to make assumptions as far as you write them in a comment.
  - Feel free to write tests (If you wish)
+ - We are hardcore Python users ;)
