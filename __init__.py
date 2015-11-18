@@ -54,8 +54,8 @@ class Person(object):
         paths = self.path_to_cat()
         if paths is not None:
             try:
+                self.previous_stations.append(self.current_station)
                 self.current_station = paths[1]
-                self.moves = self.moves + 1
             except IndexError:
                 pass
 
