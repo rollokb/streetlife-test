@@ -2,13 +2,13 @@ import sys
 import pdb
 import random
 from pprint import pprint
-from network import graph, names, NoPathFoundException
+from network import create_tfl_grapth, NoPathFoundException
 
+# Load the data!
+graph = create_tfl_grapth()
 
 class Cat(object):
     current_station = None
-    trapped = False
-
 
     def __init__(self, initial_station):
         self.current_station = initial_station
@@ -24,12 +24,7 @@ class Cat(object):
 
 
 class Person(object):
-    current_station = None
-    id = None
-    trapped = False
-    cat = None
-    moves = 0
-    previous_stations = []
+    previous_stations = set()
 
     def __init__(self, initial_station, cat, id):
         self.current_station = initial_station
@@ -54,11 +49,17 @@ class Person(object):
         paths = self.path_to_cat()
         if paths is not None:
             try:
-                self.previous_stations.append(self.current_station)
-                self.current_station = paths[1]
+                self.previous_stations.add(self.current_station)
+                # Avoid stations already visited
+                prefered_stations = [s for s in paths if s not in self.previous_stations]
+                if prefered_stations:
+                    next_station = prefered_stations[0]
+                else:
+                    next_station = paths[1]
+
+                self.current_station = next_station
             except IndexError:
                 pass
-
 
 
 def main(cats_and_owners):
@@ -66,8 +67,7 @@ def main(cats_and_owners):
     # In the dataset provided, the keys are a continuous list
     # So I'm making the assumption that there will be an id for
     # each number within 1 ... count(name.keys())
-    station_ids = names.keys()
-
+    station_ids = graph.names.keys()
     for i in range(0, cats_and_owners):
         # copy the station ids
         availiable_spawns = list(station_ids)
@@ -81,7 +81,6 @@ def main(cats_and_owners):
         cat = Cat(cat_spawn_station_id)
         person = Person(person_spawn_station_id, cat, i+1)
         people.append(person)
-
 
     people_who_found_their_cat = []
 
@@ -97,7 +96,7 @@ def main(cats_and_owners):
 
             if person.found_cat():
                 print("Person %d found cat %d - %s is now closed." %
-                      (person.id, person.id, names[person.current_station]))
+                      (person.id, person.id, graph.names[person.current_station]))
                 graph.close_station(person.current_station)
                 # When we close the station we also need to check if this
                 # permanently separates an owner from the cat
@@ -110,16 +109,12 @@ def main(cats_and_owners):
                 people.remove(person)
                 break
 
-
     # Calculate the stats
     print("Total Number of cats: %d" % cats_and_owners)
     print("Number of cats found: %d" % len(people_who_found_their_cat))
-    total_moves = sum([person.moves for person in people_who_found_their_cat])
+    total_moves = sum([len(person.previous_stations) for person in people_who_found_their_cat])
     print("Average number of movements required to find cat: %d"
           %  (total_moves / len(people_who_found_their_cat) ) )
-
-
-
 
 
 if __name__ == '__main__':
