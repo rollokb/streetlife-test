@@ -2,8 +2,10 @@ import pdb
 from collections import defaultdict
 from pprint import pprint
 
+
 class NoPathFoundException(Exception):
     pass
+
 
 class TFLNetworkGraph(object):
     """
@@ -91,34 +93,25 @@ class TFLNetworkGraph(object):
         except KeyError:
             pass
 
-    def generate_random_path(self, station):
-        """
-        Cats take random paths on the graph
-        """
 
+def create_tfl_grapth():
+    names = {}
+    connections = []
 
-names = {}
-connections = []
+    # load the names
+    with open('tfl_stations.csv') as f:
+        for line in f:
+            data = line.split(',')
+            id = int(data[0]) # cast id to an int
+            name = data[1][:-1] # truncate new line char
+            names[id] = name
 
-# load the names
-with open('tfl_stations.csv') as f:
-    for line in f:
-        data = line.split(',')
-        id = int(data[0]) # cast id to an int
-        name = data[1][:-1] # truncate new line char
-        names[id] = name
+    # load the connections (edges)
+    with open('tfl_connections.csv') as f:
+        for line in f:
+            data = line.split(',')
+            station1 = int(data[0]) # cast to int
+            station2 = int(data[1])
+            connections.append((station1, station2)) # Append a tuple of the connection
 
-# load the connections (edges)
-with open('tfl_connections.csv') as f:
-    for line in f:
-        data = line.split(',')
-        station1 = int(data[0]) # cast to int
-        station2 = int(data[1])
-        connections.append((station1, station2)) # Append a tuple of the connection
-
-# Create the network graph. Exporting it as a module makes it behave as a
-# singleton.
-graph = TFLNetworkGraph(connections, names)
-
-
-__all__ = ['graph', 'names', ]
+    return TFLNetworkGraph(connections, names)
