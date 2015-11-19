@@ -1,14 +1,26 @@
 #!/usr/local/bin/python3
 import sys
-import random
-from pprint import pprint
 from streetlife.tfl_graph import graph
 from streetlife.utils import find_cats, generate_people
 
 
 if __name__ == '__main__':
-    # Default to 10 people and cats
-    people_count = int(sys.argv[1]) if 1 < len(sys.argv) else 10
+    # Validate input
+    try:
+        people_count = int(sys.argv[1])
+    except (IndexError, ValueError):
+        print("Please enter in a number as a argument")
+        sys.exit()
+
+    if people_count < 0:
+        print("Please enter in a natural number!")
+        sys.exit()
+
+    if people_count == 0:
+        print("No cats were released into the TFL network, all is well.")
+        sys.exit()
+
+
     print("%d cats and their owners will be spawned in the TFL network." \
           % people_count)
 
