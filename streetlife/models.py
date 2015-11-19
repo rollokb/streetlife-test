@@ -18,15 +18,15 @@ class Cat(object):
 
 
 class Person(object):
-    previous_stations = set()
-    # The cat does not need to count it's moves. Because it moves each time it's
-    # owner does.
-    moves = 0
 
     def __init__(self, initial_station, cat, id):
         self.current_station = initial_station
         self.cat = cat
         self.id = id
+        self.previous_stations = set()
+        # The cat does not need to count it's moves. Because it moves each time it's
+        # owner does.
+        self.moves = 0
 
     def found_cat(self):
         "If person and cat are at the same station, the cat has been found"
@@ -41,19 +41,29 @@ class Person(object):
         return True if self.moves > MAX_MOVES else False
 
     def choose_station(self, paths):
-        try:
-            self.previous_stations.add(self.current_station)
-            # Avoid stations already visited
-            prefered_stations = [s for s in paths if s not in self.previous_stations]
-            if prefered_stations:
-                next_station = prefered_stations[0]
-            else:
-                next_station = paths[1]
+        """
+        choose_station checks if there are any connections that have not already
+        been visited.
+        """
+        self.previous_stations.add(self.current_station)
+        available_stations = graph.get_connections(self.current_station)
+        prefered_stations = available_stations - self.previous_stations # sets arithmetic
 
-            self.current_station = next_station
-            self.moves = self.moves + 1
-        except IndexError:
-            pass
+        optimal_station = paths[1] # Next station in pathfinding route
+
+        # if there are any prefered stations
+        if len(prefered_stations) > 0:
+            if optimal_station in prefered_stations:
+                # if the optiminal station is in prefered_stations
+                return optimal_station
+            else:
+                # if the optimal station is not in prefered_stations but there
+                # are other stations to choose from, just choose any.
+                return list(prefered_stations)[0] # any element
+        else:
+            # if it is not possible to move to a prefered station
+            return optimal_station
+
 
     def step_to_cat(self):
         "Get the paths the person can take and choose the station"
@@ -61,5 +71,6 @@ class Person(object):
                             self.cat.current_station)
         # If there are paths available, get the next station
         if paths is not None:
-            self.choose_station(paths)
+            self.current_station = self.choose_station(paths)
+            self.moves = self.moves + 1
 
