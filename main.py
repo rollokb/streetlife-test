@@ -2,8 +2,8 @@
 import sys
 import random
 from pprint import pprint
-from lib.tfl_graph import graph
-from lib.utils import find_cats, generate_people
+from streetlife.tfl_graph import graph
+from streetlife.utils import find_cats, generate_people
 
 
 if __name__ == '__main__':
