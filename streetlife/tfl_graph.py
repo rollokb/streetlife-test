@@ -33,7 +33,13 @@ class TFLNetworkGraph(object):
         return self._graph[station]
 
     def find_path(self, station1, station2):
-        parents = self.bds(station1, station2)
+        """
+        find_path works using a BDF algorithm to search for the
+        destination (if a path exists). I set the node's parent
+        (for this context), and then work backwards to find the
+        actual path.
+        """
+        parents = self._get_parent_chain(station1, station2)
 
         if len(parents) > 0:
             path = [station2]
@@ -48,13 +54,7 @@ class TFLNetworkGraph(object):
         else:
             return None
 
-    def bds(self, station1, station2):
-        """
-        find_path works using a BDF algorithm to search for the
-        destination (if a path exists). I set the node's parent
-        (for this context), and then work backwards to find the
-        actual path.
-        """
+    def _get_parent_chain(self, station1, station2):
         visited = dict.fromkeys(self._graph.keys(), False)
         queue = []
         parent = {}
