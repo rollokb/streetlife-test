@@ -1,5 +1,5 @@
 from pprint import pprint
-from .tfl_graph import TFLNetworkGraph
+from streetlife.tfl_graph import TFLNetworkGraph
 
 def test_pathfinding_with_line():
     """
@@ -48,7 +48,6 @@ def test_pathfinding_with_tree():
     # bottom branch
     path = graph.find_path(0, 4)
     assert path == [0,3,4]
-
 
 def test_pathfinding_with_cyclical_graph():
     """
