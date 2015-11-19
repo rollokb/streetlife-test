@@ -1,5 +1,5 @@
 from pprint import pprint
-from .network import TFLNetworkGraph
+from network.tfl_graph import TFLNetworkGraph
 
 def test_traversal():
     graph = TFLNetworkGraph(
